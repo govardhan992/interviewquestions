@@ -1,4 +1,10 @@
 #!/bin/bash
 
-file='path of the file'
-gmail=$($file | grep *.@gmail.com)
+
+filename=$1
+
+while read -r line; do
+        if [[ $line == "@gmail.com" ]]; then
+                echo "$line"
+        fi
+done < $filename
