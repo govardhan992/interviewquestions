@@ -371,3 +371,21 @@ You can specify the image pull policy when running a Docker command by using the
 
 docker run --pull always my-image
 This command will always pull the latest version of the my-image image, even if a cached version is already present on the host.
+
+## How to remove remote branch using git command
+
+git push origin --delete feature/new-feature
+
+## Docker volume types?
+
+Docker provides different types of volumes to store data outside of containers. Some of the commonly used volume types are:
+
+Named Volumes: These are user-defined volumes created and named using the docker volume create command. Named volumes are managed by Docker and can be shared among multiple containers. They provide an easy way to manage data and ensure data persist even when the container is removed.
+
+Host Volumes: Host volumes allow you to mount a directory from the host machine into a container. This means that the data is stored on the host machine and can be accessed by the container. Host volumes are useful for sharing files between the host and the container and for accessing data that is not part of the container image.
+
+Tmpfs Volumes: Tmpfs volumes are created in memory and are useful for storing temporary data that does not need to persist between container runs. Tmpfs volumes are faster than disk-based volumes but are limited by the amount of memory available on the host machine.
+
+Bind Mounts: Bind mounts allow you to mount a file or directory from the host machine into a container, similar to host volumes. However, bind mounts are not managed by Docker and are controlled by the host machine's file system permissions. Bind mounts are useful for quickly sharing files between the host and container during development.
+
+Each volume type has its own use case, and choosing the right type depends on your application's requirements. By using volumes, you can ensure that your data is persistent and can be easily shared between containers, making it a critical feature of Docker.
