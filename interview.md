@@ -176,4 +176,184 @@ To enable incremental analysis in SonarQube, you need to follow these steps:
 6. After making this change, the next analysis run will be incremental, analyzing only the changed or added code since the last analysis.
 It is important to note that incremental analysis is only available for certain languages and analysis types in SonarQube. Additionally, you should ensure that your SonarQube version supports incremental analysis, as it was introduced in version 5.3.
 
+## What is git merge and rebase?
+
+git merge and git rebase are both Git commands used to integrate changes from one branch into another branch.
+git merge is used to combine changes from one branch into another branch. When you run git merge, it creates a new merge commit in the target branch, which links the target branch with the source branch. This merge commit records the state of both branches at the time of the merge and serves as a permanent record of the integration.
+
+git rebase, on the other hand, is a different way of integrating changes from one branch into another. Instead of creating a new merge commit, git rebase reapplies the changes from the source branch onto the target branch, one by one, based on the current state of the target branch. This results in a linear history of changes, without any merge commits.
+
+The choice between git merge and git rebase depends on your personal preference and the project you're working on. If you prefer a clear history of merges and want to preserve the order of commits, git merge is a good choice. If you prefer a more linear history and don't mind re-writing the history of your branch, git rebase might be the better choice. However, git rebase can be more complex and dangerous, as it can result in conflicts and lost work if it's not used carefully.
+
+
+## how to images are stored in the jfrog artifactory ?
+
+Two steps to do the images are stored in to jfrong artifacory
+
+Step1:  Integrate Artifactory with Jenkins
+Step2: Written jenkins pipeline script.
+
+Integrate Artifactory with Jenkins:
+
+Login to Jenkins to integrate Artifactory with Jenkins
+	1. Install "Artifactory" plug-in
+	• Manage Jenkins -> Jenkins Plugins -> available -> artifactory
+	2. Configure Artifactory server credentials
+	• Manage Jenkins -> Configure System -> Artifactory
+		○ Artifactory Servers
+			§ Server ID : Artifactory-Server
+			§ URL : Artifactory Server URL
+			§ Username :
+			§ Password : 
+Pipeline Script:
+
+Pipeline {
+	Agent any
+		Stages{
+			Stage("push docker image to artifactory"){
+				Steps{
+					Withcredentials([usernamepassword(credentials:'artifactory_cred',passwordVariable:' ',usernameVariable:'username')]) {
+					  sh "docker push username/imagename:tag"
+					}
+					}
+						}
+							}
+					}
+
+
+## how to increase node space in docker file
+
+To increase the node space in a Dockerfile, you can use the '--storage-opt' flag when creating or running the docker 
+Container.
+
+## how to add nodes in Jenkins
+
+To add a node in Jenkins, follow these steps:
+
+1. Log in to Jenkins and click on the "Manage Jenkins" link from the left-hand menu.
+2. Select the "Manage Nodes and Clouds" option.
+3. Click on the "New Node" button on the top right corner of the screen.
+4. Enter a name for your new node and select the type of node you want to create (e.g. "Permanent Agent" or "Docker Agent").
+5. Fill in the details for the node, such as the number of executors, the remote root directory, and the labels that you want to associate with the node.
+6. If you are creating a "Permanent Agent", you will need to specify the hostname or IP address of the node, as well as the credentials to connect to it. If you are creating a "Docker Agent", you will need to specify the Docker image that you want to use for the agent.
+7. Click on the "Save" button to create the new node.
+Once you have added the new node, you can use it to run Jenkins jobs by specifying the appropriate labels in the job configuration. You can also configure the node to run specific types of jobs or to only be available during certain times of the day.
+
+
+## How to reset Jenkins admin password.
+
+To reset the Jenkins admin password, follow these steps:
+1. Log in to the server where Jenkins is installed.
+2. Stop the Jenkins service if it's running. You can do this by running the command sudo systemctl stop jenkins on a Linux server.
+3. Navigate to the Jenkins home directory on the server. This is typically located at /var/lib/jenkins.
+4. Locate the config.xml file in the Jenkins home directory and open it with a text editor.
+5. Search for the <useSecurity>true</useSecurity> tag and change the value to <useSecurity>false</useSecurity>. This will disable security on the Jenkins server temporarily.
+6. Save the config.xml file and close the text editor.
+
+## Reset Jenkins Admin’s Password
+After Jenkins restarts navigate to the web console. Notice that you were not prompted for a username or password. This is because we disabled security in Jenkins’ configuration file.
+If this is a publicly shared Jenkins instance, you should disable public access to the server until the password reset is complete.
+To reset admin’s password, do the following.
+7. Click on People on the left-hand navigation menu.
+8. Click on the Admin.
+9. Delete the user account.
+10. Navigate to Jenkins / Manage Jenkins.
+11. Click on Configure Global Security
+12. Check the Enable Security check box
+13. Under Security Realm, select Jenkins’ own user database
+14. In the Authorization section, select Logged-in users can do anything.
+15. Unselect Allow anonymous read access.
+16. Click Save to save your changes
+17. Once you have completed the tasks above, you will be redirect to a page where a new Admin user can be created. Fill in your new details and then click Create First Admin User.
+18. You have no created a new Admin user with a new password.
+
+## How to backup completely Jenkins master job without using plugin.
+
+To backup a Jenkins master job without using a plugin, follow these steps:
+1. Log in to the server where Jenkins is installed.
+2. Navigate to the Jenkins home directory on the server. This is typically located at /var/lib/jenkins.
+3. Copy the entire job directory that you want to back up. The job directories are located in the jobs subdirectory of the Jenkins home directory. The name of the job directory corresponds to the name of the job in Jenkins.
+4. Paste the copied job directory to a safe location outside of the Jenkins home directory. This will create a backup of the job that you can restore later if needed.
+5. If your Jenkins instance has custom plugins or configurations, you may want to also back up the Jenkins home directory itself.
+
+To restore a backed up job, follow these steps:
+
+1. Log in to the server where Jenkins is installed.
+2. Navigate to the Jenkins home directory on the server.
+3. Copy the backed up job directory that you want to restore.
+4. Paste the copied job directory into the jobs subdirectory of the Jenkins home directory. Make sure to give it the same name as the original job directory.
+5. Restart the Jenkins service. You can do this by running the command sudo systemctl restart jenkins on a Linux server.
+6. The restored job should now appear in the Jenkins user interface and be available for use.
+
+
+## Jenkins user account creation.
+
+Jenkins user account creation, following steps:
+
+1. Log in to your Jenkins instance as an administrator.
+2. Click on "Manage Jenkins" in the left-hand menu.
+3. Click on "Manage Users" in the list of options that appears.
+4. Click on the "Create User" button.
+5. Enter the user details, including the username, password, full name, and email address.
+6. Choose the appropriate "Security Realm" and "Authorization" options for your setup. For example, you may choose to use Jenkins' built-in user database or integrate with an external authentication system.
+7. Click the "Create User" button to save the new user.
+
+
+## Different type of  jobs in Jenkins
+
+Jenkins supports various types of jobs, which can be used to automate different types of software development and deployment tasks. Here are some of the most common types of jobs in Jenkins:
+
+1. Freestyle project: This is a general-purpose job that can execute any kind of shell script, batch file, or command. It can be used to build, test, or deploy software, as well as to perform other automated tasks.
+
+2. Pipeline project: This is a job type that defines a continuous delivery pipeline as a set of stages, each of which can run one or more steps. It provides a way to model complex workflows that involve multiple stages of testing, building, and deployment.
+
+3. Multi-configuration project: This is a job type that can build the same source code on multiple platforms or with different configurations. It can be used to build and test software across different operating systems, architectures, or other variables.
+
+4. Maven project: This is a job type that uses the Maven build system to build, test, and deploy Java applications. It provides integration with Maven repositories and can automatically manage dependencies.
+
+5. Freestyle matrix project: This is a job type that combines the features of the Freestyle and Multi-configuration projects. It allows you to define a matrix of axes that can be used to build and test software across multiple configurations.
+
+6. GitHub organization project: This is a job type that scans a GitHub organization or a GitHub user account for repositories and automatically creates jobs for each repository. It allows you to automatically build and test software hosted on GitHub.
+
+
+## Cron Jobs and Hooks in Jenkins
+
+Cron Jobs and Hooks are two different mechanisms in Jenkins that are used to schedule and trigger jobs
+
+1. Cron Jobs: Cron is a Unix utility that allows you to schedule commands to run at specific intervals. In Jenkins, you can use Cron syntax to schedule jobs to run at specific times or intervals. To schedule a job using Cron, go to the job's configuration page, and in the "Build Triggers" section, select the "Build periodically" checkbox. You can then enter a Cron expression to specify when the job should run.
+
+2. Hooks: Hooks are a way to trigger a Jenkins job automatically when a specific event occurs. There are several types of hooks supported by Jenkins, including Git hooks, Subversion hooks, and GitHub webhooks. Hooks are typically used to trigger jobs when changes are made to source code, such as a new commit or a merge to a branch. To set up a hook, you need to configure the source code repository to send a notification to Jenkins when a relevant event occurs. You can then configure the Jenkins job to listen for the event and trigger the job when the event occurs.
+
+Both Cron Jobs and Hooks are powerful mechanisms that can be used to automate tasks in Jenkins. Cron Jobs are ideal for scheduling tasks that need to run on a specific schedule, such as nightly builds or periodic backups. Hooks are ideal for triggering tasks when changes are made to source code, such as running tests or deploying the latest version of the application.
+
+
+
+import hudson.model.User
+import jenkins.model.Jenkins
+import org.joda.time.DateTime
+
+def inactiveThreshold = 30
+def jenkins = Jenkins.getInstance()
+def now = new DateTime()
+
+jenkins.getAllItems(User.class).each { user ->
+    def lastLogin = new DateTime(user.getProperty(jenkins.securityRealm).loadUserByUsername(user.getId()).getLastLogin())
+    def inactiveDays = (now.minus(lastLogin.getMillis()).getMillis() / 86400000).toInteger()
+    if (inactiveDays > inactiveThreshold) {
+        jenkins.securityRealm.createCliAuthenticator().authenticate(user.getId(), null)
+        def userToDelete = jenkins.getUser(user.getId())
+        userToDelete.delete()
+        println "Revoked access for user ${user.getId()} who has been inactive for ${inactiveDays} days."
+    }
+}
+
+
+
+## what is Git Sparse 
+
+Git Sparse is a feature in Git that allows you to configure your working directory to include only a subset of files and directories from your repository. This can be useful when working with large repositories that contain many files or when you only need to work with a specific subset of files.
+With Git Sparse, you can define a set of patterns that determine which files and directories are included in your working directory. This is done using the git sparse-checkout command, which allows you to specify the patterns that should be included or excluded.
+Once you have set up Git Sparse, your working directory will only include the files and directories that match your specified patterns. This can make your repository smaller and faster to work with, as you don't need to download and manage all of the files in the repository.
+ 
+
 
