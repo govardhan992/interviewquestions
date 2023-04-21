@@ -354,6 +354,20 @@ jenkins.getAllItems(User.class).each { user ->
 Git Sparse is a feature in Git that allows you to configure your working directory to include only a subset of files and directories from your repository. This can be useful when working with large repositories that contain many files or when you only need to work with a specific subset of files.
 With Git Sparse, you can define a set of patterns that determine which files and directories are included in your working directory. This is done using the git sparse-checkout command, which allows you to specify the patterns that should be included or excluded.
 Once you have set up Git Sparse, your working directory will only include the files and directories that match your specified patterns. This can make your repository smaller and faster to work with, as you don't need to download and manage all of the files in the repository.
- 
 
+## docker image pull policy 
 
+In Docker, the "image pull policy" determines when Docker should check for new versions of an image and whether to use a cached version of the image or always pull the latest version.
+
+There are three main image pull policies in Docker:
+
+always: This policy always pulls the latest version of the image, even if a cached version is already present on the host. This can be useful for ensuring that you are always using the most up-to-date version of an image, but it can also be slow if the image is large and changes frequently.
+
+if-not-present: This policy first checks if a cached version of the image is present on the host. If a cached version is found, Docker uses it. If a cached version is not found, Docker pulls the latest version of the image. This can be a good balance between always pulling the latest version and avoiding unnecessary downloads.
+
+never: This policy only uses a cached version of the image and never pulls the latest version, even if a newer version is available. This can be useful for avoiding unnecessary downloads and ensuring that you always use a specific version of an image, but it can also lead to using outdated images.
+
+You can specify the image pull policy when running a Docker command by using the --pull option, followed by one of the above policies. For example:
+
+docker run --pull always my-image
+This command will always pull the latest version of the my-image image, even if a cached version is already present on the host.
