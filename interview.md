@@ -26,7 +26,7 @@ The architecture of k8s consist of  one master node and multiple worker nodes, t
 
 The master node consists of different components.
 
-APIVERSION:  it is a primary component of  master node and It is central point of communication between all other components of cluster. Including etcd datastore, schedular, control manager and also communicate with kubelet on each worker node to gather the information about the state of the cluster  .
+APIServer:  it is a primary component of  master node and It is central point of communication between all other components of cluster. Including etcd datastore, schedular, control manager and also communicate with kubelet on each worker node to gather the information about the state of the cluster  .
 
 ETCD: is stores the data including information about pod service, and other resources it also store the information about the current state of the cluster. It provides high availability and ensures that the data stores in etcd is always available and consistent .
 
