@@ -225,6 +225,11 @@ Pipeline {
 
 To increase the node space in a Dockerfile, you can use the '--storage-opt' flag when creating or running the docker 
 Container.
+RUN sysctl -w vm.max_map_count=262144
+
+While running docker container:
+
+Docker run --sysctl vm.max_map_count=262144 my image
 
 ## how to add nodes in Jenkins
 
