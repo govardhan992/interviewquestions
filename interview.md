@@ -394,3 +394,14 @@ Tmpfs Volumes: Tmpfs volumes are created in memory and are useful for storing te
 Bind Mounts: Bind mounts allow you to mount a file or directory from the host machine into a container, similar to host volumes. However, bind mounts are not managed by Docker and are controlled by the host machine's file system permissions. Bind mounts are useful for quickly sharing files between the host and container during development.
 
 Each volume type has its own use case, and choosing the right type depends on your application's requirements. By using volumes, you can ensure that your data is persistent and can be easily shared between containers, making it a critical feature of Docker.
+
+## what is kubernates services ?
+## ClusterIp :
+     it provides an internal IP adress to access a set of pods within the cluster.
+## NodePort:
+     it expose the service on a specific port on each node, allowing external access to the service.
+## LoadBalancer:
+     it creates a load balancer in the cloud providers infrastructure to distabute external traffic to the service.
+## ExternalName:
+     it gives a kubernates service a DNS name without exposing it internally or externally in the cluster. it acts as an alias for an external services.
+     
