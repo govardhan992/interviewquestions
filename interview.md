@@ -476,3 +476,8 @@ def runUnitTests() {
 }
 
 return this
+
+## how many s3 buckets are created by default ?
+
+limit is 100 buckets
+
