@@ -405,3 +405,74 @@ Each volume type has its own use case, and choosing the right type depends on yo
 ## ExternalName:
      it gives a kubernates service a DNS name without exposing it internally or externally in the cluster. it acts as an alias for an external services.
      
+
+
+## write jenkins pipeline using shared libraries in pipeline and i need to run 2 jobs parrleely ?
+
+@Library('maven_libraries') _  // Load the shared library named 'maven_libraries'
+
+pipeline {
+    agent any
+
+    stages {
+        // Stage 1: Checkout the code from version control
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        // Stage 2: Build packages using shared library
+        stage('Build') {
+            steps {
+                // Call shared library to build the project
+                script {
+                    maven_libraries.buildProject() // Calls buildProject() from the shared library
+                }
+            }
+        }
+
+        // Stage 3: Parallel stages for SonarQube and UnitTests
+        stage('Code Quality & Tests') {
+            parallel {
+                // SonarQube stage
+                stage('SonarQube') {
+                    steps {
+                        script {
+                            maven_libraries.runSonarQube() // Calls runSonarQube() from the shared library
+                        }
+                    }
+                }
+                
+                // UnitTests stage
+                stage('UnitTests') {
+                    steps {
+                        script {
+                            maven_libraries.runUnitTests() // Calls runUnitTests() from the shared library
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+========================================================
+## Shared Library Structure:
+In your maven_libraries shared library, the functions might look like this:
+
+vars/maven_libraries.groovy
+
+def buildProject() {
+    sh "mvn clean package"
+}
+
+def runSonarQube() {
+    // Adjust the SonarQube command as per your setup
+    sh "mvn sonar:sonar -Dsonar.host.url=http://your-sonarqube-url"
+}
+
+def runUnitTests() {
+    sh "mvn test"
+}
+
+return this
